@@ -128,10 +128,11 @@ Once `direnv` is installed, we need to tell `zsh` to load `direnv` whenever the 
 code ~/.zshrc
 ```
 
-The list of plugins is located in the beginning of the file and should look like this when you add `direnv`:
+Add `direnv` to the end of your list of plugins in your `.zshrc`
+When you're done, it should look something like this:
 
 ``` bash
-plugins=(...direnv)
+plugins=(git gitfast ... pyenv ssh-agent direnv)
 ```
 
 Start a new `zsh` window in order to load `direnv`
@@ -245,7 +246,7 @@ Biq Query is a data-warehouse, used to store structured data, that can be querie
 - It's optimized for large transformation such as `group-by`, `join`, `where` etc...easily
 - But it's not optimized for frequent row-by-row insert/delete
 
-Le WagonCab is actually using a managed postgreSQL (e.g. [Google Cloud SQL](https://cloud.google.com/sql)) as its main production database on which it's Django app is storing / reading hundred thousands of individual transactions per day!
+Le WagonCab is actually using a managed postgreSQL (e.g. [Google Cloud SQL](https://cloud.google.com/sql)) as its main production database on which its Django app is storing / reading hundred thousands of individual transactions per day!
 
 Every night, Le WagonCab launch a "database replication" job that applies the daily diffs of the "main" postgresSQL into the "replica" Big Query warehouse. Why?
 - Because you don't want to run queries directly against your production-database! That could slow down your users.
@@ -732,7 +733,7 @@ make run_all
 make test_kitt
 ```
 
-**🏋🏽‍♂️ Go Big: re-run everything with `DATA_SIZE = 'all'`  `CHUNK_SIZE=100k` chunks for instance 🏋🏽‍♂️**!
+**🏋🏽‍♂️ Go Big: re-run everything with `DATA_SIZE = 'all'` 🏋🏽‍♂️**!
 
 **🏁 Switch OFF your VM to finish 🌒**
 
