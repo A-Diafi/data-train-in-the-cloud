@@ -145,7 +145,6 @@ def preprocess(min_date: str = '2009-01-01', max_date: str = '2015-01-01') -> No
         print("Get a DataFrame iterable from querying the BigQuery server...")
         chunks = None
 
-        # 🎯 HINT: `bigquery.Client(...).query(...).result(page_size=...).to_dataframe_iterable()`
         client = bigquery.Client(project=GCP_PROJECT)
 
         query_job = client.query(query)
@@ -160,7 +159,6 @@ def preprocess(min_date: str = '2009-01-01', max_date: str = '2015-01-01') -> No
         chunk_clean = clean_data(chunk)
 
         # Create chunk_processed
-        # 🎯 HINT: create (`X_chunk`, `y_chunk`), process only `X_processed_chunk`, then concatenate (X_processed_chunk, y_chunk)
         X_chunk = chunk_clean.drop("fare_amount", axis=1)
         y_chunk = chunk_clean[["fare_amount"]]
         X_processed_chunk = preprocess_features(X_chunk)
@@ -168,8 +166,6 @@ def preprocess(min_date: str = '2009-01-01', max_date: str = '2015-01-01') -> No
         chunk_processed = pd.DataFrame(np.concatenate((X_processed_chunk, y_chunk), axis=1))
 
         # Save and append the processed chunk to a local CSV at "data_processed_path"
-        # 🎯 HINT: df.to_csv(mode=...)
-        # 🎯 HINT: we want a CSV with neither index nor headers (they'd be meaningless)
         chunk_processed.to_csv(
             data_processed_path,
             mode="w" if chunk_id==0 else "a",
@@ -178,8 +174,6 @@ def preprocess(min_date: str = '2009-01-01', max_date: str = '2015-01-01') -> No
         )
 
         # Save and append the raw chunk `if not data_query_cache_exists`
-        # 🎯 HINT: we want a CSV with headers this time
-        # 🎯 HINT: only the first chunk should store headers
         if not data_query_cache_exists:
             chunk.to_csv(
                 data_query_cache_path,
